@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  backend:
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1024M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SERVER_PORT=8080
+      - JAVA_OPTS=-Xmx256m -Xms128m
+
+  frontend:
+    environment:
+      - NODE_ENV=production
+      - NODE_OPTIONS="--max_old_space_size=4096"
+    build:
+      context: ./whatsthis-frontend
+      cache_from:
+        - node:18
+      args:
+        NEXT_PUBLIC_API_URL: http://${VM_IP}:8080/api
+
+  db:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    command: 
+      - "postgres"
+      - "-c"
+      - "shared_buffers=64MB"
+      - "-c"
+      - "work_mem=2MB"
+      - "-c"
+      - "maintenance_work_mem=32MB" 

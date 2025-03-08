@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    volumes:
+      - ./env.properties:/app/env.properties
+    environment:
+      SPRING_CONFIG_LOCATION: file:/app/env.properties
+      SERVER_PORT: 8080
+
+  frontend:
+    build:
+      context: ./whatsthis-frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://${VM_IP}:8080/api
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://${VM_IP}:8080/api
+
+  db:
+    image: postgres:latest
+    container_name: database
+    environment:
+      POSTGRES_DB: whatsthis
+      POSTGRES_USER: hal9000
+      POSTGRES_PASSWORD: 4444
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:

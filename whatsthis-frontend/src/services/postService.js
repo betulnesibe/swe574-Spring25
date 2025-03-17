@@ -24,8 +24,35 @@ const getAllPosts = async (page = 1, size = 12, sortBy = "newest") => {
 
 const getPostById = async (id) => {
   try {
+    console.log(`Fetching post with id ${id}`);
     const response = await axiosInstance.get(`/posts/${id}`);
-    return response.data;
+    const postData = response.data;
+    
+    // Better debug logging for parts
+    console.log('Raw post data received:', postData);
+    
+    // Ensure parts property exists and is an array
+    if (!postData.parts) {
+      postData.parts = [];
+      console.log('Parts property was missing - initialized as empty array');
+    } else if (!Array.isArray(postData.parts)) {
+      console.log('Parts is not an array, converting:', postData.parts);
+      // If parts exists but is not an array, try to handle it
+      try {
+        if (typeof postData.parts === 'string') {
+          postData.parts = JSON.parse(postData.parts);
+        }
+        if (!Array.isArray(postData.parts)) {
+          postData.parts = [postData.parts]; // Convert single object to array
+        }
+      } catch (e) {
+        console.error('Error processing parts data:', e);
+        postData.parts = [];
+      }
+    }
+    
+    console.log(`Received ${postData.parts.length} parts from API:`, postData.parts);
+    return postData;
   } catch (error) {
     console.error(`Error fetching post with id ${id}:`, error);
     throw error;

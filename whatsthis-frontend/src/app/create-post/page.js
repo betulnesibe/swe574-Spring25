@@ -406,7 +406,10 @@ function CreatePostContent() {
         description: formData.description.trim(),
         userId: user.id,
         imageUrls: imageUrls,
+        parts: parts.length > 0 ? parts : null // Include parts data if it exists
       };
+      
+      console.log("Submitting parts data:", parts); // Debug log to verify parts are included
 
       const method = isEditing ? 'put' : 'post';
       const endpoint = isEditing ? `/posts/${editId}` : '/posts';

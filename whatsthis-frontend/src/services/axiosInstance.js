@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const baseURL = 'http://localhost:8080/api';
 
-console.log('API URL:', process.env.NEXT_PUBLIC_API_URL);
+console.log('API URL:', baseURL);
 console.log('Base URL being used:', baseURL);
 
 const axiosInstance = axios.create({

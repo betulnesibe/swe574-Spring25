@@ -65,8 +65,12 @@ public class CommentController {
     }
 
     @PostMapping("/{id}/upvote")
-    public EntityModel<CommentDto> upvoteComment(@PathVariable Long id) {
-        CommentDto updatedComment = commentService.upvoteComment(id);
+    public EntityModel<CommentDto> upvoteComment(
+            @PathVariable Long id,
+            @RequestParam(required = false) Long userId) {
+        
+        System.out.println("Upvoting comment " + id + " for user " + userId);
+        CommentDto updatedComment = commentService.upvoteComment(id, userId);
 
         return EntityModel.of(updatedComment,
                 linkTo(methodOn(CommentController.class).getCommentsById(id)).withSelfRel(),
@@ -74,8 +78,12 @@ public class CommentController {
     }
 
     @PostMapping("/{id}/downvote")
-    public EntityModel<CommentDto> downvoteComment(@PathVariable Long id) {
-        CommentDto updatedComment = commentService.downvoteComment(id);
+    public EntityModel<CommentDto> downvoteComment(
+            @PathVariable Long id,
+            @RequestParam(required = false) Long userId) {
+        
+        System.out.println("Downvoting comment " + id + " for user " + userId);
+        CommentDto updatedComment = commentService.downvoteComment(id, userId);
 
         return EntityModel.of(updatedComment,
                 linkTo(methodOn(CommentController.class).getCommentsById(id)).withSelfRel(),

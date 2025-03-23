@@ -547,6 +547,26 @@ export default function DetailedPostPage() {
       style: "The artistic or design style that characterizes the item.",
       technique: "The method used to create or manufacture the item.",
       age: "The approximate age or date of creation of the item.",
+      pattern: "Repeated or regular arrangement of shapes, colors, numbers, or behaviors that can be recognized and sometimes predicted.",
+      brand:"A brand is the identity of a company or product, represented by a name, logo, design, or reputation that distinguishes it from others in the market.",
+      color: "Color is the visual perception of different wavelengths of light, described using terms like red, blue, green, and so on.",
+      print: "Print of the object.",
+      icon:"Small image or symbol.",
+      shape:"Form or outline of an object, defined by its boundaries, such as circles, squares, or triangles etc...",
+      hardness:"Measure of how resistant a material is.",
+      functionality: "Tasks or operations performed by/with the object.",
+      taste:"Sense that allows us to detect flavors like sweet, sour, salty, bitter, and umami through our tongue.",
+      smell:"Sense that allows us to detect and recognize odors through our nose.",
+      Price:"Value of object in US dollars",
+      location:"Location of the object",
+      texture:"How the surface of an object feels or looks, such as smooth, rough, soft, or bumpy.",
+      timeperiod:"Specific duration of time in which the object made",
+      textandlanguage:"Written text on the abject and language"
+
+
+
+
+
     }
 
     return descriptions[key.toLowerCase()] || "Additional information about this attribute."
